@@ -56,8 +56,8 @@ function print_map() {
 			$str_time  = $data[0];
 			$msg_type  = $data[1];
 			$latitude  = str_replace("\"","",trim($data[2]));
-			$longitude = trim($data[3]);
-			print<<<EOEU
+			$longitude = str_replace("\"","",trim($data[3]));
+			print<<<EOPM
 <h1>$msg_type at $str_time</h1>
 <div id="map"></div>
 <script>
@@ -68,12 +68,14 @@ function print_map() {
   map.setView([$c_latitude, $c_longitude], 18);
   var marker = L.marker([$latitude, $longitude]).addTo(map).bindPopup("<strong>HELP ME!!!</strong>").openPopup();
 </script>
-<div class="link_gmap">Googleマップで見る：<a href="https://www.google.com/maps?q=$latitude,$longitude" target="_blank">$latitude,$longitude</a></div>
-EOEU;
+<div class="link_gmap">Googleマップで台車の位置を見る：<a href="https://www.google.com/maps?q=$latitude,$longitude" target="_blank">$latitude,$longitude</a></div>
+EOPM;
 		}
 	} else {
-		print("<h1>no error</h1>");
-		print(GPS_FILE_NAME);
+		print<<<EONE
+<h1>no error</h1>
+<div class="link_gmap">Googleマップで中央点を見る：<a href="https://www.google.com/maps?q=$c_latitude,$c_longitude" target="_blank">$c_latitude,$c_longitude</a></div>
+EONE;
 	}
 }
 
