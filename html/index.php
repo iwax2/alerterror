@@ -15,15 +15,15 @@
 <body>
 
 <?php
+const GPS_FILE_NAME = 'gps.csv';
+const CENTER_LAT = '34.649070'; // マップの中心座標
+const CENTER_LON = '135.758757';
 // 引数チェック
 if( isset($_POST['msg_type']) and isset($_POST['latitude']) and isset($_POST['longitude']) ) {
 	write_data( $_POST['msg_type'], $_POST['latitude'], $_POST['longitude'] );
 } else {
 	print_map();
 }
-const GPS_FILE_NAME = 'gps.csv';
-const c_latitude = '34.649070'; // マップの中心座標
-const c_longitude = '135.758757';
 
 // 台車からの通知動作
 function write_data( $msg_type, $longitude, $latitude ) {
@@ -47,10 +47,10 @@ function write_data( $msg_type, $longitude, $latitude ) {
 
 // マップの表示
 function print_map() {
-	$c_latitude = c_latitude;
-	$c_longitude = c_longitude;
+	$c_latitude = CENTER_LAT;
+	$c_longitude = CENTER_LON;
 	if( file_exists(GPS_FILE_NAME) ) {
-		$lines = file(GPS_FILE_NAME;
+		$lines = file(GPS_FILE_NAME);
 		if( count($lines)>0 ){
 			$data = explode(",", trim($lines[0]), 4); // 4つまでのデータしか読まない（4つ以上はすべて4つ目の変数に入る）
 			$str_time  = $data[0];
@@ -68,11 +68,12 @@ function print_map() {
   map.setView([$c_latitude, $c_longitude], 18);
   var marker = L.marker([$latitude, $longitude]).addTo(map).bindPopup("<strong>HELP ME!!!</strong>").openPopup();
 </script>
-<div class="link_gmap">Googleマップで見る：<a href="https://www.google.com/maps?q=$p_latitude,$p_longitude" target="_blank">$p_latitude,$p_longitude</a></div>
+<div class="link_gmap">Googleマップで見る：<a href="https://www.google.com/maps?q=$latitude,$longitude" target="_blank">$latitude,$longitude</a></div>
 EOEU;
 		}
 	} else {
 		print("<h1>no error</h1>");
+		print(GPS_FILE_NAME);
 	}
 }
 
