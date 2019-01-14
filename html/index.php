@@ -55,7 +55,7 @@ function print_map() {
 			$data = explode(",", trim($lines[0]), 4); // 4つまでのデータしか読まない（4つ以上はすべて4つ目の変数に入る）
 			$str_time  = $data[0];
 			$msg_type  = $data[1];
-			$latitude  = trim($data[2]);
+			$latitude  = str_replace("\"","",trim($data[2]));
 			$longitude = trim($data[3]);
 			print<<<EOEU
 <h1>$msg_type at $str_time</h1>
