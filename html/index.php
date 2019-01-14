@@ -21,13 +21,13 @@ if( isset($_POST['msg_type']) and isset($_POST['latitude']) and isset($_POST['lo
 } else {
 	print_map();
 }
-const FILE_NAME = 'gps.csv';
-$c_latitude = 34.649070; // マップの中心座標
-$c_longitude = 135.758757;
+$FILE_NAME = 'gps.csv';
+$c_latitude = '34.649070'; // マップの中心座標
+$c_longitude = '135.758757';
 
 // 台車からの通知動作
 function write_data( $msg_type, $longitude, $latitude ) {
-	$fp = fopen(FILE_NAME, 'w');
+	$fp = fopen($FILE_NAME, 'w');
 	if ($fp){
 		if (flock($fp, LOCK_EX)){
 			date_default_timezone_set('Asia/Tokyo');
@@ -47,8 +47,8 @@ function write_data( $msg_type, $longitude, $latitude ) {
 
 // マップの表示
 function print_map() {
-	if( file_exists(FILE_NAME) ) {
-		$lines = file(FILE_NAME);
+	if( file_exists($FILE_NAME) ) {
+		$lines = file($FILE_NAME);
 		if( count($lines)>0 ){
 			$data = explode(",", trim($lines[0]), 4); // 4つまでのデータしか読まない（4つ以上はすべて4つ目の変数に入る）
 			$str_time  = $data[0];
