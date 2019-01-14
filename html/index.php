@@ -26,7 +26,7 @@ if( isset($_POST['msg_type']) and isset($_POST['latitude']) and isset($_POST['lo
 }
 
 // 台車からの通知動作
-function write_data( $msg_type, $longitude, $latitude ) {
+function write_data( $msg_type, $latitude, $longitude ) {
 	$fp = fopen(GPS_FILE_NAME, 'w');
 	if ($fp){
 		if (flock($fp, LOCK_EX)){
