@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Alert error</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.2.0/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet@1.2.0/dist/leaflet.js"></script>
+<style>
+  #map {height: 600px; width: 100%;}
+  .link_gmap{ margin-top: 20px; }
+</style>
+</head>
+<!--
+情報：34.649070, 135.758757, 電気：34.648256, 135.759291
+地図：https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png
+写真：https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg
+-->
+
+<body>
+
+<h1>台車の軌跡</h1>
+<div id="map"></div>
+<script>
+  var t_standard = new L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/std/{z}/{x}/{y}.png', {
+    attribution: "<a href='http://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html' target='_blank'>国土地理院</a>"
+  });
+
+  var t_photo = new L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg', {
+    attribution: "<a href='http://www.gsi.go.jp/kikakuchousei/kikakuchousei40182.html' target='_blank'>国土地理院</a>"
+  });
+  var Map_BaseLayer = {
+    "標準地図": t_standard,
+    "全国最新写真": t_photo
+  };
+  var map = L.map('map');
+  L.tileLayer('https://cyberjapandata.gsi.go.jp/xyz/seamlessphoto/{z}/{x}/{y}.jpg', {
+    attribution: "<a href='https://maps.gsi.go.jp/development/ichiran.html' target='_blank'>地理院タイル</a>"
+  }).addTo(map);
+  map.setView([34.649070, 135.758476], 18);
+  var marker = L.marker([34.649070, 135.758476]).addTo(map).bindPopup("<strong>HELP ME!!!</strong>").openPopup();
+  
+  var Line = L.polyline([
+    [34.649067, 135.757962],
+    [34.648465, 135.758101],
+    [34.648483, 135.758729],
+    [34.649074, 135.758721],
+    [34.649070, 135.758476]
+  ],{
+    "color": "#FF0000",
+    "weight": 5,
+    "opacity": 0.6
+  }).addTo(map);
+
+  L.control.layers(Map_BaseLayer, null, {
+    collapsed: true
+  }).addTo(map)
+
+</script>
+
+
+</body>
+</html>
